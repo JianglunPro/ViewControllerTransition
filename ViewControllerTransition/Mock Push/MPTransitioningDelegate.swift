@@ -30,7 +30,8 @@ class MPTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        // 在这里就算存在手势, 也不能确保就是交互触发
+        // 在这里就算存在手势, 也不能确保就是交互触发, 可能是上一个‘周期’的手势...
+        // 所以这里的判断是无效的, 然而 MPInteractionController 29 行
         if let gesture = gesture {
             let interactionController = MPInteractionController(gesture: gesture)
             return interactionController

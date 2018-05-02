@@ -163,7 +163,7 @@ class CPAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 class CPInteractionController: UIPercentDrivenInteractiveTransition {
     
     let gesture: UIScreenEdgePanGestureRecognizer
-    var contextData: UIViewControllerContextTransitioning!
+    var contextData: UIViewControllerContextTransitioning?
     
     init(gesture: UIScreenEdgePanGestureRecognizer) {
         self.gesture = gesture
@@ -203,11 +203,14 @@ class CPInteractionController: UIPercentDrivenInteractiveTransition {
     }
     
     func percentForGesture(gesture: UIScreenEdgePanGestureRecognizer) -> CGFloat {
-        let containerView = contextData.containerView
-        let location = gesture.location(in: containerView)
-        let width = containerView.bounds.width
-        let percent = location.x / width
-        return percent
+        if let contextData = contextData {
+            let containerView = contextData.containerView
+            let location = gesture.location(in: containerView)
+            let width = containerView.bounds.width
+            let percent = location.x / width
+            return percent
+        }
+        return 0
     }
     
     
